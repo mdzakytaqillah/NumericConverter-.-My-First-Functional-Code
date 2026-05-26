@@ -2,7 +2,113 @@
 #include<sstream>
 using namespace std;
 
-int main(){
+class Dec {
+	private:
+		int dec, sisa1, sisa2, sisa3;
+		string hasil1, hasil2, hasil3, temp1, temp2, temp3;
+	
+	public:
+	void DecToBin(int dec) {
+		for(int a = dec; a > 0; a /= 2){
+			stringstream bit;
+			sisa1 = a % 2;
+			bit<<sisa1;
+			bit>>temp1;
+			hasil1 += temp1;
+		}
+		
+		cout<<"Binary (2)\t\t= ";
+		for(int b = hasil1.length()-1; b >= 0; b--){
+			cout<<hasil1[b];
+		}
+		cout<<endl;
+	}
+	
+	void DecToOct(int dec) {
+		for(int c = dec; c > 0; c /= 8){
+			stringstream bit;
+			sisa2 = c % 8;
+			bit<<sisa2;
+			bit>>temp2;
+			hasil2 += temp2;
+		}
+		cout<<"Octal (8)\t\t= ";
+		for(int d = hasil2.length()-1; d >= 0; d--){
+			cout<<hasil2[d];
+		}
+		cout<<endl;
+	}
+	
+	void DecToHex(int dec) {
+		for(int e = dec; e > 0; e /= 16){
+			stringstream bit;
+			sisa3 = e % 16;
+			if(sisa3==10){
+				hasil3 += "A";
+				continue;
+			}else if(sisa3==11){
+				hasil3 += "B";
+				continue;
+			}else if(sisa3==12){
+				hasil3 += "C";
+				continue;
+			}else if(sisa3==13){
+				hasil3 += "D";
+				continue;
+			}else if(sisa3==14){
+				hasil3 += "E";
+				continue;
+			}else if(sisa3==15){
+				hasil3 += "F";
+				continue;
+			}
+			bit<<sisa3;
+			bit>>temp3;
+			hasil3 += temp3;
+		}
+		cout<<"Hexadecimal (16)\t= ";
+		for(int f = hasil3.length()-1; f >= 0; f--){
+			cout<<hasil3[f];
+		}
+		cout<<endl;
+	}
+};
+
+class Bin {
+	private:
+		int bin, i=1, sisa1;
+	
+	public:
+	int dec=0;
+	void BinToDec(int bin) {
+		while(bin!=0){
+			sisa1 = bin % 10;
+			dec = dec + (sisa1*i);
+			i = i*2;
+    		bin = bin/10;
+    	}
+		cout<<"Decimal (10)\t\t= "<<dec<<endl;
+	}
+};
+
+class Oct {
+	private:
+		int oct, i=1, sisa1;
+	
+	public:
+	int dec=0;
+	void OctToDec(int oct) {
+		while(oct!=0){
+			sisa1 = oct % 10;
+			dec = dec + (sisa1*i);
+			i = i*8;
+    		oct = oct/10;
+    	}
+		cout<<"Decimal (10)\t\t= "<<dec<<endl;
+	}
+};
+
+int main() {
 	char option, afteraction;
 	menu:
 		cout<<"=================================================="<<endl;
@@ -16,73 +122,18 @@ int main(){
 		cin>>option;
 		if(option=='a'){
 			repeatdec:
-				int desimal, sisa1, sisa2, sisa3;
-				string hasil1, hasil2, hasil3, temp1, temp2, temp3;
+				int desimal;
+				Dec d;
 				cout<<"Masukkan bilangan desimal = ";
 				cin>>desimal;
 				cout<<"--------------------------------------------------"<<endl;
 				cout<<"Decimal (10)\t\t= "<<desimal<<endl;
 				
-				for(int a = desimal; a > 0; a /= 2){
-					stringstream bit;
-					sisa1 = a % 2;
-					bit<<sisa1;
-					bit>>temp1;
-					hasil1 += temp1;
-				}
+				d.DecToBin(desimal);
+				d.DecToOct(desimal);
+				d.DecToHex(desimal);
 				
-				cout<<"Binary (2)\t\t= ";
-				for(int b = hasil1.length()-1; b >= 0; b--){
-					cout<<hasil1[b];
-				}
 				cout<<endl;
-				
-				for(int c = desimal; c > 0; c /= 8){
-					stringstream bit;
-					sisa2 = c % 8;
-					bit<<sisa2;
-					bit>>temp2;
-					hasil2 += temp2;
-				}
-				cout<<"Octal (8)\t\t= ";
-				for(int d = hasil2.length()-1; d >= 0; d--){
-					cout<<hasil2[d];
-				}
-				cout<<endl;
-				
-				for(int e = desimal; e > 0; e /= 16){
-					stringstream bit;
-					sisa3 = e % 16;
-					if(sisa3==10){
-						hasil3 += "A";
-						continue;
-					}else if(sisa3==11){
-						hasil3 += "B";
-						continue;
-					}else if(sisa3==12){
-						hasil3 += "C";
-						continue;
-					}else if(sisa3==13){
-						hasil3 += "D";
-						continue;
-					}else if(sisa3==14){
-						hasil3 += "E";
-						continue;
-					}else if(sisa3==15){
-						hasil3 += "F";
-						continue;
-					}
-					bit<<sisa3;
-					bit>>temp3;
-					hasil3 += temp3;
-				}
-				cout<<"Hexadecimal (16)\t= ";
-				for(int f = hasil3.length()-1; f >= 0; f--){
-					cout<<hasil3[f];
-				}
-				cout<<endl;
-				cout<<endl;
-				
 				cout<<"--------------------------------------------------"<<endl;
 				cout<<"~~~~~~~a. Jalankan Konversi Desimal Kembali~~~~~~~"<<endl;
 				cout<<"~~~~~~~      b. Kembali ke Menu Awal       ~~~~~~~"<<endl;
@@ -94,71 +145,21 @@ int main(){
 				}else if(afteraction=='b'){
 					goto menu;
 				}
-			
 		}else if(option=='b'){
 			repeatbin:
-				int biner, desimal=0, i=1, sisa1, sisa2, sisa3;
-				string hasil2, hasil3, temp2, temp3;
-				
+				int biner;
+				Bin b;
+				Dec bd;
     			cout<<"Masukkan bilangan biner = ";
     			cin>>biner;
 				cout<<"--------------------------------------------------"<<endl;
 				cout<<"Binary (2)\t\t= "<<biner<<endl;
 				
-				while(biner!=0){
-					sisa1 = biner % 10;
-					desimal = desimal + (sisa1*i);
-					i = i*2;
-    				biner = biner/10;
-    			}
-				cout<<"Decimal (10)\t\t= "<<desimal<<endl;
+				b.BinToDec(biner);
+				bd.DecToOct(b.dec);
+				bd.DecToHex(b.dec);
 				
-				for(int c = desimal; c > 0; c /= 8){
-					stringstream bit;
-					sisa2 = c % 8;
-					bit<<sisa2;
-					bit>>temp2;
-					hasil2 += temp2;
-				}
-				cout<<"Octal (8)\t\t= ";
-				for(int d = hasil2.length()-1; d >= 0; d--){
-					cout<<hasil2[d];
-				}
 				cout<<endl;
-			
-				for(int e = desimal; e > 0; e /= 16){
-					stringstream bit;
-					sisa3 = e % 16;
-					if(sisa3==10){
-						hasil3 += "A";
-						continue;
-					}else if(sisa3==11){
-						hasil3 += "B";
-						continue;
-					}else if(sisa3==12){
-						hasil3 += "C";
-						continue;
-					}else if(sisa3==13){
-						hasil3 += "D";
-						continue;
-					}else if(sisa3==14){
-						hasil3 += "E";
-						continue;
-					}else if(sisa3==15){
-						hasil3 += "F";
-						continue;
-					}
-					bit<<sisa3;
-					bit>>temp3;
-					hasil3 += temp3;
-				}
-				cout<<"Hexadecimal (16)\t= ";
-				for(int f = hasil3.length()-1; f >= 0; f--){
-					cout<<hasil3[f];
-				}
-				cout<<endl;
-				cout<<endl;
-				
 				cout<<"--------------------------------------------------"<<endl;
 				cout<<"~~~~~~~~a. Jalankan Konversi Biner Kembali~~~~~~~~"<<endl;
 				cout<<"~~~~~~~      b. Kembali ke Menu Awal       ~~~~~~~"<<endl;
@@ -170,71 +171,22 @@ int main(){
 				}else if(afteraction=='b'){
 					goto menu;
 				}
-		
 		}else if(option=='c'){
 			repeatoct:
-				int oktal, desimal=0, i=1, sisa1, sisa2, sisa3;
-				string hasil2, hasil3, temp2, temp3;
+				int oktal;
+				Oct o;
+				Dec od;
 			
     			cout<<"Masukkan bilangan oktal = ";
     			cin>>oktal;
 				cout<<"--------------------------------------------------"<<endl;
 				cout<<"Octal (8)\t\t= "<<oktal<<endl;
 				
-				while(oktal!=0){
-					sisa1 = oktal % 10;
-					desimal = desimal + (sisa1*i);
-					i = i*8;
-    				oktal = oktal/10;
-    			}
-				cout<<"Decimal (10)\t\t= "<<desimal<<endl;
-			
-				for(int a = desimal; a > 0; a /= 2){
-					stringstream bit;
-					sisa2 = a % 2;
-					bit<<sisa2;
-					bit>>temp2;
-					hasil2 += temp2;
-				}
-				cout<<"Binary (2)\t\t= ";
-				for(int b = hasil2.length()-1; b >= 0; b--){
-					cout<<hasil2[b];
-				}
-				cout<<endl;
+				o.OctToDec(oktal);
+				od.DecToBin(o.dec);
+				od.DecToHex(o.dec);
 				
-				for(int e = desimal; e > 0; e /= 16){
-					stringstream bit;
-					sisa3 = e % 16;
-					if(sisa3==10){
-						hasil3 += "A";
-						continue;
-					}else if(sisa3==11){
-						hasil3 += "B";
-						continue;
-					}else if(sisa3==12){
-						hasil3 += "C";
-						continue;
-					}else if(sisa3==13){
-						hasil3 += "D";
-						continue;
-					}else if(sisa3==14){
-						hasil3 += "E";
-						continue;
-					}else if(sisa3==15){
-						hasil3 += "F";
-						continue;
-					}
-					bit<<sisa3;
-					bit>>temp3;
-					hasil3 += temp3;
-				}
-				cout<<"Hexadecimal (16)\t= ";
-				for(int f = hasil3.length()-1; f >= 0; f--){
-					cout<<hasil3[f];
-				}
 				cout<<endl;
-				cout<<endl;
-				
 				cout<<"--------------------------------------------------"<<endl;
 				cout<<"~~~~~~~~a. Jalankan Konversi Oktal Kembali~~~~~~~~"<<endl;
 				cout<<"~~~~~~~      b. Kembali ke Menu Awal       ~~~~~~~"<<endl;
@@ -245,78 +197,22 @@ int main(){
 					goto repeatoct;
 				}else if(afteraction=='b'){
 					goto menu;
-				}
-			
+				}				
 		}else if(option=='d'){
 			repeathex:
-				int desimal, sisa1, sisa2, sisa3;
-				string hasil1, hasil2, hasil3, temp1, temp2, temp3;
+				int decimal;
+				Dec hd;
 				
 				cout<<"Masukkan bilangan heksadesimal = ";
-				cin>>hex>>desimal;
+				cin>>hex>>decimal;
 				cout<<"--------------------------------------------------"<<endl;
-				for(int e = desimal; e > 0; e /= 16){
-					stringstream bit;
-					sisa3 = e % 16;
-					if(sisa3==10){
-						hasil3 += "A";
-						continue;
-					}else if(sisa3==11){
-						hasil3 += "B";
-						continue;
-					}else if(sisa3==12){
-						hasil3 += "C";
-						continue;
-					}else if(sisa3==13){
-						hasil3 += "D";
-						continue;
-					}else if(sisa3==14){
-						hasil3 += "E";
-						continue;
-					}else if(sisa3==15){
-						hasil3 += "F";
-						continue;
-					}
-					bit<<sisa3;
-					bit>>temp3;
-					hasil3 += temp3;
-				}
-				cout<<"Hexadecimal (16)\t= ";
-				for(int f = hasil3.length()-1; f >= 0; f--){
-					cout<<hasil3[f];
-				}
+				hd.DecToHex(decimal);
+				
+				cout<<"Decimal (10)\t\t= "<<decimal<<endl;
+				hd.DecToBin(decimal);
+				hd.DecToOct(decimal);
+				
 				cout<<endl;
-				
-				cout<<"Decimal (10)\t\t= "<<desimal<<endl;
-				
-				for(int a = desimal; a > 0; a /= 2){
-					stringstream bit;
-					sisa1 = a % 2;
-					bit<<sisa1;
-					bit>>temp1;
-					hasil1 += temp1;
-				}
-				
-				cout<<"Binary (2)\t\t= ";
-				for(int b = hasil1.length()-1; b >= 0; b--){
-					cout<<hasil1[b];
-				}
-				cout<<endl;
-				
-				for(int c = desimal; c > 0; c /= 8){
-					stringstream bit;
-					sisa2 = c % 8;
-					bit<<sisa2;
-					bit>>temp2;
-					hasil2 += temp2;
-				}
-				cout<<"Octal (8)\t\t= ";
-				for(int d = hasil2.length()-1; d >= 0; d--){
-					cout<<hasil2[d];
-				}
-				cout<<endl;
-				cout<<endl;
-				
 				cout<<"--------------------------------------------------"<<endl;
 				cout<<"~~~~a.  Jalankan Konversi Heksadesimal Kembali~~~~"<<endl;
 				cout<<"~~~~~~~      b. Kembali ke Menu Awal       ~~~~~~~"<<endl;
